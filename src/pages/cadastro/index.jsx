@@ -1,5 +1,5 @@
 import { useNavigate  } from "react-router-dom";
-import { MdEmail, MdLock } from 'react-icons/md'
+import { MdEmail, MdLock, MdAccountBox } from 'react-icons/md'
 import { Button } from '../../components/Button';
 import { Header } from '../../components/Header';
 import { Input } from '../../components/Input';
@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 import { Container, Title, Column, TitleLogin, SubtitleLogin, EsqueciText, CriarText, Row, Wrapper } from './styles';
 
-const Login = () => {
+const Cadastro = () => {
 
     const navigate = useNavigate()
 
@@ -19,10 +19,7 @@ const Login = () => {
         mode: 'onChange',
     });
 
-    const handleClickRegister = () => {
-        navigate('/cadastro')
-    }
-
+    
     const onSubmit = async (formData) => {
         try{
             const {data} = await api.get(`/users?email=${formData.email}&senha=${formData.senha}`);
@@ -50,17 +47,21 @@ const Login = () => {
             <Column>
                 <Wrapper>
                 <TitleLogin>Faça seu cadastro</TitleLogin>
-                <SubtitleLogin>Faça seu login e make the change._</SubtitleLogin>
+                <SubtitleLogin>Crie sua conta e make the change._</SubtitleLogin>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <Input placeholder="Name" leftIcon={<MdAccountBox/>} name="Nome" control={control} />
                     <Input placeholder="E-mail" leftIcon={<MdEmail />} name="email"  control={control} />
                     {errors.email && <span>E-mail é obrigatório</span>}
                     <Input type="password" placeholder="Senha" leftIcon={<MdLock />}  name="senha" control={control} />
                     {errors.senha && <span>Senha é obrigatório</span>}
-                    <Button title="Entrar" variant="secondary" type="submit"/>
+                    <Button title="Criar minha conta" variant="secondary" type="submit"/>
                 </form>
                 <Row>
-                    <EsqueciText>Esqueci minha senha</EsqueciText>
-                    <CriarText onClick={handleClickRegister}>Criar Conta</CriarText>
+                    <CriarText>Ao clicar em "criar minha conta" aceito as 
+                        <p>
+                        politicas de privacidade e termos de uso da Dio.
+                        </p>
+                    </CriarText>
                 </Row>
                 </Wrapper>
             </Column>
@@ -68,4 +69,4 @@ const Login = () => {
     </>)
 }
 
-export { Login }
+export { Cadastro }
